@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
 public class StudentCreateExecuteAction extends Action {
-
+ 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {

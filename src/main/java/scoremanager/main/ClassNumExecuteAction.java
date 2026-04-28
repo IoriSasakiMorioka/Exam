@@ -13,7 +13,7 @@ public class ClassNumExecuteAction extends Action{
 		String[] classNums = req.getParameterValues("classNums");
 		Teacher teacher = null;
 		Util util = new Util();
-		try{
+		try{ 
 			teacher = util.getUser(req);
 			ClassNumDao cDao = new ClassNumDao();
 			cDao.save(teacher.getSchool(), classNums);
