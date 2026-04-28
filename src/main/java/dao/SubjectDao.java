@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.School;
-import bean.Student;
 import bean.Subject;
 
 public class SubjectDao extends Dao{
@@ -20,7 +19,7 @@ public class SubjectDao extends Dao{
 		Connection connection = getConnection();
 		// プリペアードステートメント
 		PreparedStatement statement = null;
-
+ 
 		try {
 			// プリペアードステートメントにSQL文をセット
 			statement = connection.prepareStatement("select * from subject where school_cd=? and cd=?");

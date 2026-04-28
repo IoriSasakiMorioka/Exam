@@ -15,7 +15,7 @@ public class ClassNumDao extends Dao{
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
 		String cd = school.getCd();
-		try{
+		try{ 
 			Connection connection = getConnection();
 			statement = connection.prepareStatement("select * from class_num where school_cd = ?");
 			statement.setString(1, cd);
