@@ -3,7 +3,7 @@ package bean;
 import java.io.Serializable;
 
 public class Teacher extends User implements Serializable {
-	/**
+ 	/**
 	 * 教員ID:String
 	 */
 	private String id;

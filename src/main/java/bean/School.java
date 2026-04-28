@@ -3,7 +3,7 @@ package bean;
 import java.io.Serializable;
 
 public class School implements Serializable {
-
+ 
 	/**
 	 * 学校コード:String
 	 */

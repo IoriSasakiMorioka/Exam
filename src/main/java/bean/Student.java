@@ -2,10 +2,8 @@ package bean;
 
 import java.io.Serializable;
 
-import bean.School;
-
 public class Student implements Serializable{
-
+ 
 	private String no;
 	private String name;
 	private int entYear;
