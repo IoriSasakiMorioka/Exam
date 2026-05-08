@@ -1,28 +1,28 @@
 package bean;
 
 public class SubjectScore {
+    private int entYear;
+    private String classNum;
     private String studentNo;
     private String studentName;
-    private Integer point; // null の場合は「-」表示
+    private int point1;
+    private int point2;
 
-    public String getStudentNo() {
-        return studentNo;
-    }
-    public void setStudentNo(String studentNo) {
-        this.studentNo = studentNo;
-    }
+    public int getEntYear() { return entYear; }
+    public void setEntYear(int entYear) { this.entYear = entYear; }
 
-    public String getStudentName() {
-        return studentName;
-    }
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
+    public String getClassNum() { return classNum; }
+    public void setClassNum(String classNum) { this.classNum = classNum; }
 
-    public Integer getPoint() {
-        return point;
-    }
-    public void setPoint(Integer point) {
-        this.point = point;
-    }
+    public String getStudentNo() { return studentNo; }
+    public void setStudentNo(String studentNo) { this.studentNo = studentNo; }
+
+    public String getStudentName() { return studentName; }
+    public void setStudentName(String studentName) { this.studentName = studentName; }
+
+    public int getPoint1() { return point1; }
+    public void setPoint1(int point1) { this.point1 = point1; }
+
+    public int getPoint2() { return point2; }
+    public void setPoint2(int point2) { this.point2 = point2; }
 }
