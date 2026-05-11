@@ -2,60 +2,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/common/base.jsp">
-    <jsp:param name="title" value="科目別成績一覧" />
+    <jsp:param name="title" value="成績一覧（科目）" />
 </jsp:include>
 
 <div class="container">
 
-    <h2>科目別成績一覧</h2>
+    <h2>成績一覧（科目）</h2>
 
-    <!-- 検索条件の表示-->
-    <div class="search-condition">
-        <p>入学年度：${entYear}</p>
-        <p>クラス：${classNum}</p>
-        <p>科目：${subjectName}</p>
+    <div>
+        入学年度：${entYear}<br>
+        クラス：${classNum}<br>
+        科目：${subjectName}
     </div>
 
-    <!-- 学生情報が存在しない場合 -->
     <c:if test="${empty scoreList}">
-        <div class="no-data">
-            学生情報が存在しませんでした
+        <div class="error-message">
+            学生情報が存在しませんでした。
         </div>
     </c:if>
 
-    <!-- 一覧表示 -->
     <c:if test="${not empty scoreList}">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>学生番号</th>
-                    <th>氏名</th>
-                    <th>得点</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="s" items="${scoreList}">
-                    <tr>
-                        <td>${s.studentNo}</td>
-                        <td>${s.studentName}</td>
+        <table border="1">
+            <tr>
+                <th>入学年度</th>
+                <th>クラス</th>
+                <th>学生番号</th>
+                <th>氏名</th>
+                <th>1回</th>
+                <th>2回</th>
+            </tr>
 
-                        <td>
-                            <c:choose>
-                                <c:when test="${s.point == null}">
-                                    -
-                                </c:when>
-                                <c:otherwise>
-                                    ${s.point}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+            <c:forEach var="s" items="${scoreList}">
+                <tr>
+                    <td>${s.entYear}</td>
+                    <td>${s.classNum}</td>
+                    <td>${s.studentNo}</td>
+                    <td>${s.studentName}</td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${s.point1 == 0}">－</c:when>
+                            <c:otherwise>${s.point1}</c:otherwise>
+                        </c:choose>
+                    </td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${s.point2 == 0}">－</c:when>
+                            <c:otherwise>${s.point2}</c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+            </c:forEach>
+
         </table>
     </c:if>
 
-    <div class="back-link">
+    <div>
         <a href="ScoreSearch.action">検索画面に戻る</a>
     </div>
 
