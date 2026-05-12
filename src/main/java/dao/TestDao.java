@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.School;
 import bean.SubjectScore;
 
 public class TestDao extends Dao {
@@ -14,7 +15,7 @@ public class TestDao extends Dao {
             int entYear,
             String classNum,
             String subjectCd,
-            String schoolCd) throws Exception {
+            School schoolCd) throws Exception {
 
         List<SubjectScore> list = new ArrayList<>();
 
