@@ -2,6 +2,7 @@ package scoremanager.main;
 
 import java.util.List;
 
+import bean.School;
 import bean.Subject;
 import bean.SubjectScore;
 import bean.Teacher;
@@ -36,7 +37,7 @@ public class ScoreSearchExecuteAction extends Action {
 
         // ログインユーザの学校コード
         Teacher teacher = (Teacher) req.getSession().getAttribute("user");
-        String schoolCd = teacher.getSchool();
+        School schoolCd = teacher.getSchool();
 
         // 科目名を取得（画面設計書に必要）
         SubjectDao sdao = new SubjectDao();
