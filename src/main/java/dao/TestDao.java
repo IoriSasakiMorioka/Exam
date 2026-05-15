@@ -107,7 +107,7 @@ public class TestDao extends Dao {
             int entYear,
             String classNum,
             String subjectCd,
-            String schoolCd) throws Exception {
+            School schoolCd) throws Exception {
 
         List<SubjectScore> list = new ArrayList<>();
 
@@ -138,12 +138,12 @@ public class TestDao extends Dao {
 
             int i = 1;
             ps.setString(i++, subjectCd); // t1.SUBJECT_CD
-            ps.setString(i++, schoolCd);  // t1.SCHOOL_CD
+            ps.setString(i++, schoolCd.getCd());  // t1.SCHOOL_CD
             ps.setString(i++, subjectCd); // t2.SUBJECT_CD
-            ps.setString(i++, schoolCd);  // t2.SCHOOL_CD
+            ps.setString(i++, schoolCd.getCd());  // t2.SCHOOL_CD
             ps.setInt(i++, entYear);
             ps.setString(i++, classNum);
-            ps.setString(i++, schoolCd);
+            ps.setString(i++, schoolCd.getCd());
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
