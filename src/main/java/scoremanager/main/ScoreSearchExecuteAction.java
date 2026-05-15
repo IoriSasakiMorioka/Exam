@@ -36,11 +36,15 @@ public class ScoreSearchExecuteAction extends Action {
 
         // ログインユーザの学校コード
         Teacher teacher = (Teacher) req.getSession().getAttribute("user");
-        String schoolCd = teacher.getSchool();
+        String schoolCd = teacher.getSchool().getCd();
 
-        // 科目名を取得（画面設計書に必要）
         SubjectDao sdao = new SubjectDao();
-        Subject subject = sdao.get(subjectCd, schoolCd);
+        Subject subject = sdao.get(subjectCd, teacher.getSchool());
+        if (subject == null) {
+            req.setAttribute("message", "指定した科目が見つかりません");
+            req.getRequestDispatcher("score_search.jsp").forward(req, res);
+            return;
+        }
         String subjectName = subject.getName();
 
         // 成績一覧を取得

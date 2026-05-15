@@ -17,7 +17,7 @@ public class FrontController extends HttpServlet {
 			// パスを取得
 			String path = req.getServletPath().substring(1);
 			// ファイル名を取得しクラス名に変換
-			String name = path.replace(".a", "A").replace('/', '.');
+			String name = path.replace(".action", "Action").replace('/', '.');
 			// アクションクラスのインスタンスを返却
 			Action action = (Action) Class.forName(name).getDeclaredConstructor().newInstance();
 
@@ -27,7 +27,7 @@ public class FrontController extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// エラーページへリダイレクト
+			// エラーページにリダイレクト
 			req.getRequestDispatcher("/error.jsp").forward(req, res);
 		}
 	}
