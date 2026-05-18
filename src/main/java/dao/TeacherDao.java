@@ -30,19 +30,19 @@ public class TeacherDao extends Dao {
 			// プリペアードステートメントに教員IDをバインド
 			statement.setString(1, id);
 			// プリペアードステートメントを実行
-			ResultSet resultSet = statement.executeQuery();
+			ResultSet rSet = statement.executeQuery();
 
 			// 学校Daoを初期化
 			SchoolDao schoolDao = new SchoolDao();
 
-			if (resultSet.next()) {
+			if (rSet.next()) {
 				// リザルトセットが存在する場合
 				// 教員インスタンスに検索結果をセット
-				teacher.setId(resultSet.getString("id"));
-				teacher.setPassword(resultSet.getString("password"));
-				teacher.setName(resultSet.getString("name"));
+				teacher.setId(rSet.getString("id"));
+				teacher.setPassword(rSet.getString("password"));
+				teacher.setName(rSet.getString("name"));
 				// 学校フィールドには学校コードで検索した学校インスタンスをセット
-				teacher.setSchool(schoolDao.get(resultSet.getString("school_cd")));
+				teacher.setSchool(schoolDao.get(rSet.getString("school_cd")));
 			} else {
 				// リザルトセットが存在しない場合
 				// 教員インスタンスにnullをセット
@@ -90,5 +90,40 @@ public class TeacherDao extends Dao {
 			return null;
 		}
 		return teacher;
+	}
+	
+	public boolean sigup(String id,String password,String name,String school_cd,String school_name)throws Exception{
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		int count=0;
+		try{
+			statement = connection.prepareStatement(
+					"insert into teacher(id,password,name,school_cd)values(?,?,?,?)");
+			statement.setString(1, id);
+			statement.setString(2, password);
+			statement.setString(3, name);
+			statement.setString(4, school_cd);
+			count += statement.executeUpdate();
+			
+			statement = connection.prepareStatement(
+					"merge into school key(cd) values(?,?)");
+			statement.setString(1, school_cd);
+			statement.setString(2, school_name);
+			count += statement.executeUpdate();
+			
+			connection.commit();
+			statement.close();
+		}catch (Exception e) {
+			throw e;
+		}finally {
+			connection.setAutoCommit(true);
+			connection.close();
+		}
+		
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

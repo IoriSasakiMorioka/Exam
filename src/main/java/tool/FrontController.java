@@ -11,31 +11,32 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = { "*.action" })
 public class FrontController extends HttpServlet {
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		try {
-			// パスを取得
-			String path = req.getServletPath().substring(1);
-			// ファイル名を取得しクラス名に変換
-			String name = path.replace(".action", "Action").replace('/', '.');
-			// アクションクラスのインスタンスを返却
-			Action action = (Action) Class.forName(name).getDeclaredConstructor().newInstance();
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
-			// 遷移先URLを取得
-			action.execute(req, res);
+        try {
+            // 例: /scoremanager/main/ScoreSearch.action
+            String path = req.getServletPath().substring(1);
 
+            // 例: scoremanager.main.ScoreSearchAction
+            String name = path.replace(".action", "Action").replace('/', '.');
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			// エラーページにリダイレクト
-			req.getRequestDispatcher("/error.jsp").forward(req, res);
-		}
-	}
+            // Actionクラスを生成
+            Action action = (Action) Class.forName(name).getDeclaredConstructor().newInstance();
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+            // Action実行
+            action.execute(req, res);
 
-		doGet(req,res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.getRequestDispatcher("/error.jsp").forward(req, res);
+        }
+    }
 
-	}
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        doGet(req, res);
+    }
 }

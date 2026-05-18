@@ -26,7 +26,7 @@ public class SchoolDao extends Dao {
 
 		try {
 			// プリペアードステートメントにSQL文をセット
-			statement = connection.prepareStatement("select * from school where cd = ?");
+			statement = connection.prepareStatement("select * from school where cd=?");
 			// プリペアードステートメントに学校コードをバインド
 			statement.setString(1, cd);
 			// プリペアードステートメントを実行

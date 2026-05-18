@@ -1,6 +1,7 @@
 package dao;
 
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -261,37 +262,56 @@ public class StudentDao extends Dao{
 				return list;
 			}
 
+	public boolean save(Student student) throws Exception{
+		// コネクションを確立
+		Connection connection = getConnection();
+		// プリペアードステートメント
+		PreparedStatement statement = null;
+		// 実行件数
+		int count = 0;
 
+		try {
+			statement = connection.prepareStatement(
+					"merge into student key(no) values(?,?,?,?,?,?)");
+			statement.setString(1, student.getNo());
+			statement.setString(2, student.getName());
+			statement.setInt(3, student.getEntYear());
+			statement.setString(4, student.getClassNum());
+			statement.setBoolean(5, student.isAttend());
+			statement.setString(6, student.getSchool().getCd());
+			count = statement.executeUpdate();
+		}catch (Exception e){
+			e.printStackTrace();
+			statement.close();
+			connection.close();
+			return false;
+		} finally {
+			// プリペアードステートメントを閉じる
+			if (statement !=null) {
+				try{
+					statement.close();
+				}catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+			// コネクションを閉じる
+			if (connection != null){
+				try{
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
 
-		
-	public boolean save(Student student) throws Exception {
-
-	    String sql =
-	        "INSERT INTO student " +
-	        "(no, name, ent_year, class_num, is_attend, school_cd) " +
-	        "VALUES (?, ?, ?, ?, ?, ?) " +
-	        "ON CONFLICT (no) DO UPDATE SET " +
-	        "name = EXCLUDED.name, " +
-	        "ent_year = EXCLUDED.ent_year, " +
-	        "class_num = EXCLUDED.class_num, " +
-	        "is_attend = EXCLUDED.is_attend, " +
-	        "school_cd = EXCLUDED.school_cd";
-
-	    try (
-	        Connection connection = getConnection();
-	        PreparedStatement statement = connection.prepareStatement(sql)
-	    ) {
-	        statement.setString(1, student.getNo());
-	        statement.setString(2, student.getName());
-	        statement.setInt(3, student.getEntYear());
-	        statement.setString(4, student.getClassNum());
-	        statement.setBoolean(5, student.isAttend());
-	        statement.setString(6, student.getSchool().getCd());
-
-	        return statement.executeUpdate() > 0;
-	    }
+		if (count > 0) {
+			//実行件数が1件以上ある場合
+			return true;
+		} else {
+			// 実行件数が0件の場合
+			return false;
+		}
 	}
-
 	
 	public boolean delete(String no,String school_cd)throws Exception{
 		Connection connection = getConnection();
